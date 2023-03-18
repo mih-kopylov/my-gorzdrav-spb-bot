@@ -1,0 +1,9 @@
+name: update-dependencies
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  update-dependencies:
+    uses: mih-kopylov/workflows/.github/workflows/update-dependencies.yml@master

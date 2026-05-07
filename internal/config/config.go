@@ -2,12 +2,12 @@ package config
 
 import (
 	"github.com/caarlos0/env/v7"
-	"github.com/pkg/errors"
+	"github.com/joho/godotenv"
+	"github.com/joomcode/errorx"
 )
 
 type Config struct {
-	Token                  string `env:"TELEGRAM_API_TOKEN,required"`
-	FirebaseServiceAccount string `env:"FIREBASE_SERVICE_ACCOUNT,required"`
+	TelegramApiToken string `env:"TELEGRAM_API_TOKEN,required"`
 }
 
 func NewConfig() (*Config, error) {
@@ -20,10 +20,12 @@ func NewConfig() (*Config, error) {
 }
 
 func readConfig() (*Config, error) {
+	_ = godotenv.Load()
+
 	result := &Config{}
 	err := env.Parse(result)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to read config")
+		return nil, errorx.EnhanceStackTrace(err, "failed to read config")
 	}
 
 	return result, nil
